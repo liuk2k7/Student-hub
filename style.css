@@ -1,0 +1,233 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f8f8;
+  color: #222;
+}
+
+.navbar {
+  background-color: #fff;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #eee;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #1a237e;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #42a5f5, #1976d2), url("/images/hero-illustration.jpg") center/cover no-repeat;
+  color: white;
+  padding: 60px 40px;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-text h1 {
+  font-size: 40px;
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.hero-text span {
+  color: #fff;
+  font-weight: bold;
+}
+
+.hero-text p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  background-color: #f2653e;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.image {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  flex-shrink: 0;
+  position: right;
+}
+
+.hero-text h1,
+.hero-text p,
+.hero-text .cta-button {
+  flex: 1;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 40px;
+  flex-wrap: wrap;
+}
+
+.feature-box {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  width: 180px;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+  text-decoration: none;
+  color:inherit;
+  display: inline-block;
+}
+
+.feature-box img {
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+.feature-box h3 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.feature-box.calendario { background-color: #4285F4; color: white; }
+.feature-box.metodi { background-color: #27B3A2; color: white; }
+.feature-box.community { background-color: #E46F3C; color: white; }
+.feature-box.appunti { background-color: #11A08C; color: white; }
+
+
+.feature-box.calendario:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-box.metodi:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-box.community:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-box.appunti:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+.info {
+  display: flex;
+  justify-content: space-around;
+  padding: 60px 40px;
+  background-color: #fff;
+}
+
+.info-box {
+  max-width: 400px;
+}
+
+.info-box h2 {
+  font-size: 22px;
+  color: #1a237e;
+  margin-bottom: 10px;
+}
+
+.info-box p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+footer {
+  border-top: 2px solid black; /* Linea nera sopra il footer */
+  padding: 20px;
+  background-color: #f4f4f4; /* Colore di sfondo del footer */
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-content .social-media a,
+.footer-content .contacts a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.footer-content .contacts h3 {
+  margin-top: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: separate; /* Usa bordi separati per arrotondarli */
+    border-spacing: 0; /* Rimuove lo spazio tra le celle */
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: white; /* Sfondo della tabella */
+    border-radius: 8px; /* Arrotonda gli angoli della tabella */
+    overflow: hidden; /* Nasconde i bordi arrotondati */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra leggera */
+}
+
+/* Stile per l'intestazione della tabella */
+th {
+    background-color: #3498db; /* Colore di sfondo dell'intestazione */
+    color: white; /* Colore del testo */
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd; /* Linea di separazione */
+}
+
+/* Stile per le celle della tabella */
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd; /* Linea di separazione tra le righe */
+    text-align: left;
+    color: #333;
+}
+
+/* Celle modificabili */
+td[contenteditable="true"] {
+    background-color: #f9f9f9; /* Sfondo leggero per celle modificabili */
+    cursor: text;
+    transition: background-color 0.3s ease;
+}
+
+td[contenteditable="true"]:hover {
+    background-color: #f0f0f0; /* Cambia colore al passaggio del mouse */
+}
+
+/* Effetto hover sulle righe */
+tbody tr:hover {
+    background-color: #f9f9f9; /* Cambia il colore di sfondo della riga */
+}
+
+/* Rimuove il bordo inferiore per l'ultima riga */
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
