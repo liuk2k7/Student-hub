@@ -42,15 +42,22 @@ document.addEventListener("DOMContentLoaded", function() {
   const startTimerBtn = document.getElementById('start-timer');
   const resetTimerBtn = document.getElementById('reset-timer');
   const timerDisplay = document.getElementById('timer-display');
-
+  const progressBar = document.getElementById('pomodoro-progress-bar');
+  const showPomodoroBtn = document.getElementById('show-pomodoro-modal'); // nuovo pulsante
+  
   let timer;
+  const pomodoroDuration = 25 * 60;
   let timeLeft = 25 * 60;
   let running = false;
 
-  function updateDisplay() {
+   function updateDisplay() {
     const min = String(Math.floor(timeLeft / 60)).padStart(2, '0');
     const sec = String(timeLeft % 60).padStart(2, '0');
     if (timerDisplay) timerDisplay.textContent = `${min}:${sec}`;
+    if (progressBar) {
+      const percent = 100 * (1 - timeLeft / pomodoroDuration);
+      progressBar.style.width = percent + "%";
+    }
   }
 
   function startPomodoro() {
@@ -91,7 +98,16 @@ document.addEventListener("DOMContentLoaded", function() {
   if (resetTimerBtn) resetTimerBtn.onclick = resetPomodoro;
 
   updateDisplay();
+   if (showPomodoroBtn && pomodoroModal) {
+    showPomodoroBtn.onclick = function() {
+      pomodoroModal.style.display = 'flex';
+      resetPomodoro();
+    };
+  }
 });
+
+
+  
 
 
   
