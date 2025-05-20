@@ -105,6 +105,107 @@ document.addEventListener("DOMContentLoaded", function() {
     };
   }
 });
+// ...existing code...
+
+// Obiettivi e Progressi per community.html
+// ...existing code...
+
+document.addEventListener("DOMContentLoaded", function() {
+  // ...altro codice...
+
+  // Obiettivi e Progressi per community.html
+  const goalForm = document.getElementById('goal-form');
+  const goalInput = document.getElementById('goal-input');
+  const goalList = document.getElementById('goal-list');
+  const progressBar = document.getElementById('goal-progress-bar');
+  const progressText = document.getElementById('goal-progress-text');
+
+  if (goalForm && goalInput && goalList && progressBar && progressText) {
+    let goals = JSON.parse(localStorage.getItem('goals') || '[]');
+    renderGoals();
+
+    goalForm.onsubmit = function(e) {
+      e.preventDefault();
+      const text = goalInput.value.trim();
+      if (text) {
+        goals.push({ text, done: false });
+        goalInput.value = '';
+        saveAndRender();
+      }
+    };
+
+    function renderGoals() {
+      goalList.innerHTML = '';
+      let doneCount = 0;
+      goals.forEach((goal, idx) => {
+        const li = document.createElement('li');
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.justifyContent = 'space-between';
+        li.style.marginBottom = '6px';
+
+        const left = document.createElement('span');
+        left.textContent = goal.text;
+        left.style.flex = '1';
+        if (goal.done) left.style.textDecoration = 'line-through';
+
+        const btns = document.createElement('div');
+        btns.style.display = 'flex';
+        btns.style.gap = '8px';
+
+        // Bottone completa
+        const completeBtn = document.createElement('button');
+        completeBtn.textContent = goal.done ? '✓' : 'Completa';
+        completeBtn.style.background = goal.done ? '#27B3A2' : '#eee';
+        completeBtn.style.color = goal.done ? '#fff' : '#222';
+        completeBtn.style.border = 'none';
+        completeBtn.style.borderRadius = '5px';
+        completeBtn.style.padding = '4px 10px';
+        completeBtn.style.cursor = 'pointer';
+        completeBtn.onclick = () => {
+          goals[idx].done = !goals[idx].done;
+          saveAndRender();
+        };
+
+        // Bottone elimina
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Elimina';
+        deleteBtn.style.background = '#f2653e';
+        deleteBtn.style.color = '#fff';
+        deleteBtn.style.border = 'none';
+        deleteBtn.style.borderRadius = '5px';
+        deleteBtn.style.padding = '4px 10px';
+        deleteBtn.style.cursor = 'pointer';
+        deleteBtn.onclick = () => {
+          goals.splice(idx, 1);
+          saveAndRender();
+        };
+
+        btns.appendChild(completeBtn);
+        btns.appendChild(deleteBtn);
+
+        li.appendChild(left);
+        li.appendChild(btns);
+        goalList.appendChild(li);
+
+        if (goal.done) doneCount++;
+      });
+
+      // Aggiorna barra di avanzamento
+      const percent = goals.length ? Math.round((doneCount / goals.length) * 100) : 0;
+      progressBar.style.width = percent + '%';
+      progressText.textContent = percent + '% completato';
+    }
+
+    function saveAndRender() {
+      localStorage.setItem('goals', JSON.stringify(goals));
+      renderGoals();
+    }
+  }
+});
+  
+
+
 
 
   
