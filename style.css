@@ -202,7 +202,17 @@ footer {
 .footer-content .contacts h3 {
   margin-top: 20px;
 }
+
+#calendario {
+  text-align:center;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+
 table {
+    margin: 0 auto;
+    max-width: 1200px; /* Larghezza massima della tabella */
     width: 100%;
     border-collapse: separate; /* Usa bordi separati per arrotondarli */
     border-spacing: 0; /* Rimuove lo spazio tra le celle */
@@ -299,58 +309,181 @@ tbody tr:last-child td {
     margin-top: 30px;
     max-width: 90vw;
   }
- }
-
-  .metodi-hero {
-  text-align: center;
-  padding: 40px 10px 20px 10px;
-  background: linear-gradient(90deg, #4285F4 60%, #27B3A2 100%);
-  color: #fff;
-  border-radius: 0 0 30px 30px;
-  margin-bottom: 30px;
 }
 
-.metodi-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-  padding: 20px;
+
+
+
+
+.grafico {
+  margin: 0 auto;
+  padding: 0;
+  list-style-type: none;
 }
 
-.metodo-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(66,133,244,0.08);
-  padding: 30px 24px;
-  max-width: 320px;
-  min-width: 240px;
-  flex: 1 1 240px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  color: #222;
+.grafico *,
+.grafico::before {
+  box-sizing: border-box;
+}
+
+
+/* CHART-SKILLS STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.grafico {
   position: relative;
+  width: 350px;
+  height: 175px;
   overflow: hidden;
 }
 
-.metodo-card:hover {
-  transform: translateY(-10px) scale(1.04);
-  box-shadow: 0 16px 32px rgba(66,133,244,0.16);
+.grafico::before,
+.grafico::after {
+  position: absolute;
 }
 
-.metodo-card.cornell { border-top: 6px solid #4285F4; }
-.metodo-card.pomodoro { border-top: 6px solid #E46F3C; }
-.metodo-card.feynman { border-top: 6px solid #27B3A2; }
-.metodo-card.spaced { border-top: 6px solid #11A08C; }
-.metodo-card.mappe { border-top: 6px solid #f2653e; }
-.metodo-card.flashcards { border-top: 6px solid #4285F4; }
-
-.metodo-card h2 {
-  margin-top: 0;
-  color: #1a237e;
-  font-size: 1.3em;
+.grafico::before {
+  content: '';
+  width: inherit;
+  height: inherit;
+  border: 45px solid rgba(211, 211, 211, .3);
+  border-bottom: none;
+  border-top-left-radius: 175px;
+  border-top-right-radius: 175px;
 }
 
-.metodo-card p {
-  font-size: 1em;
-  margin-bottom: 0;
+
+.grafico li {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border: 45px solid;
+  border-top: none;
+  border-bottom-left-radius: 175px;
+  border-bottom-right-radius: 175px;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation-fill-mode: forwards;
+  animation-duration: .4s;
+  animation-timing-function: linear;
 }
+
+.grafico li:nth-child(1) {
+  z-index: 5;
+  border-color: steelblue;
+  animation-name: rotate-1;
+}
+
+.grafico li:nth-child(2) {
+  z-index: 4;
+  border-color: firebrick;
+  animation-name: rotate-2;
+  animation-delay: .4s;
+}
+
+.grafico li:nth-child(3) {
+  z-index: 3;
+  border-color: #919;
+  animation-name: rotate-3;
+  animation-delay: .8s;
+}
+
+.grafico li:nth-child(4) {
+  z-index: 2;
+  border-color: orange;
+  animation-name: rotate-4;
+  animation-delay: 1.2s;
+}
+.grafico li:nth-child(5) {
+  z-index: 1;
+  border-color: #222;
+  animation-name: rotate-5;
+  animation-delay: 1.6s;
+}
+
+.grafico span {
+  position: absolute;
+  font-size: .85rem;
+  backface-visibility: hidden;
+  animation: fade-in .4s linear forwards;
+}
+
+.grafico li:nth-child(1) span {
+  top: 55px;
+  left: 30px;
+  transform: rotate(-72deg);
+}
+
+.grafico li:nth-child(2) span {
+  top: 40px;
+  left: 10px;
+  transform: rotate(-126deg);
+  animation-delay: .4s;
+}
+
+.grafico li:nth-child(3) span {
+  top: 20px;
+  left: 10px;
+  transform: rotate(-148deg);
+  animation-delay: .8s;
+}
+
+.grafico li:nth-child(4) span {
+  top: 15px;
+  left: 10px;
+  transform: rotate(-169deg);
+  animation-delay: 1.2s;
+}
+.grafico li:nth-child(5) span {
+  top: 3px;
+  left: 10px;
+  transform: rotate(-180deg);
+  animation-delay: 1.6s;
+}
+
+ 
+@keyframes rotate-1 {
+  100% { transform: rotate(72deg);
+    /* 40% => 72deg */
+  }
+}
+
+@keyframes rotate-2 {
+  0% { transform: rotate(72deg); }
+  100% { transform: rotate(126deg);
+    /* 30% => 54deg * 54 + 72 => 126deg */
+  }
+}
+
+@keyframes rotate-3 {
+  0% { transform: rotate(126deg); }
+  100% { transform: rotate(148deg);
+    /* 12,2% => 22deg  * 126 + 22 => 148deg */
+  }
+}
+
+@keyframes rotate-4 {
+  0% { transform: rotate(148deg); }
+  100% { transform: rotate(169deg); 
+    /* 11,6% => 21deg  * 148 + 21 => 169deg */
+  }
+}
+
+@keyframes rotate-5 {
+  0% { transform: rotate(169deg); }
+  100% { transform: rotate(180deg); 
+    /* 6,1% => 11deg  * 169 + 11 => 180deg */
+  }
+}
+
+
+@keyframes fade-in {
+  0%,
+  90% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
