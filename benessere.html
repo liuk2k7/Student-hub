@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Benessere Mentale – StudentHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Quicksand:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #e0f7f4, #f9fbe7);
+      color: #2e3d49;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(90deg, #a8edea, #fed6e3);
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      color: #2d3e50;
+    }
+    header p {
+      margin: 10px 0 0;
+      font-size: 1.1rem;
+      color: #4f5c6a;
+    }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    section {
+      background: #ffffffcc;
+      backdrop-filter: blur(5px);
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      padding: 25px;
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+    section:hover {
+      transform: translateY(-4px);
+    }
+    h2 {
+      color: #336b87;
+      border-left: 6px solid #90caf9;
+      padding-left: 10px;
+      margin-bottom: 10px;
+    }
+    ul {
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      font-size: 1rem;
+      background-color: #fcfcfc;
+    }
+    button {
+      background-color: #f7b733;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 1rem;
+      margin: 6px 4px 0 0;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: transform 0.2s, background-color 0.3s;
+    }
+    button:hover {
+      background-color: #f3901d;
+      transform: scale(1.05);
+    }
+    .mood-select label {
+      font-size: 1.8rem;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .mood-select label:hover {
+      transform: scale(1.3);
+    }
+    #diarioEntries div {
+      background: #fff8e1;
+      border-left: 4px solid #f7b733;
+      margin: 10px 0;
+      padding: 10px 14px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    a {
+      color: #0077b6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #c5e1a5;
+      color: #333;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌿 Benessere Mentale – StudentHub</h1>
+    <p>Costruisci una mente forte. Ogni giorno.</p>
+  </header>
+  <main>
+    <section>
+      <h2>🧠 Cos'è il benessere mentale?</h2>
+      <p>Il benessere mentale è equilibrio, consapevolezza e cura di sé. È la base per affrontare con serenità studio, relazioni e scelte di vita.</p>
+    </section>
+    <section>
+      <h2>🧘 Tecniche di gestione dello stress</h2>
+      <ul>
+        <li><strong>Respira in modo consapevole:</strong> calma la mente in pochi minuti.</li>
+        <li><strong>Scrivi liberamente:</strong> metti giù tutto ciò che senti.</li>
+        <li><strong>Fai pause rigeneranti:</strong> anche 10 minuti ti aiutano a ricaricarti.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>☀️ Abitudini motivanti</h2>
+      <ul>
+        <li><strong>Dormi bene:</strong> la mente ha bisogno di recupero.</li>
+        <li><strong>Mangia con equilibrio:</strong> ciò che mangi influisce su umore e concentrazione.</li>
+        <li><strong>Muoviti ogni giorno:</strong> anche solo una passeggiata fa la differenza.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>💭 Diario Emotivo</h2>
+      <form id="diarioForm">
+        <textarea id="diarioInput" placeholder="Scrivi cosa senti..." rows="4"></textarea>
+        <div class="mood-select">
+          <label><input type="radio" name="mood" value="😊" checked /> 😊</label>
+          <label><input type="radio" name="mood" value="😐" /> 😐</label>
+          <label><input type="radio" name="mood" value="😟" /> 😟</label>
+          <label><input type="radio" name="mood" value="😡" /> 😡</label>
+          <label><input type="radio" name="mood" value="😴" /> 😴</label>
+        </div>
+        <button type="submit">Salva</button>
+        <button type="button" id="clearDiario">🗑️ Cancella</button>
+        <button type="button" id="exportDiario">📁 Esporta</button>
+      </form>
+      <div id="diarioEntries" style="margin-top: 20px;"></div>
+    </section>
+    <section>
+      <h2>🔗 Risorse utili</h2>
+      <ul>
+        <li><a href="https://www.headspace.com/" target="_blank" rel="noopener">Headspace – Meditazione</a></li>
+        <li><a href="https://www.telefonoamico.it/" target="_blank" rel="noopener">Telefono Amico</a></li>
+        <li><a href="https://www.mindfulnessitalia.org/" target="_blank" rel="noopener">Mindfulness Italia</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    © 2025 StudentHub – La mente è un muscolo. Allenala ogni giorno.
+  </footer>
+  <script src="benessere.js"></script>
+</body>
+</html>
