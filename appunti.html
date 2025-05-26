@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Appunti - StudentHub</title>
+ <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="foto/logo.png" type="image/x-icon" />
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    margin: 0; padding: 20px;
+    color: #333;
+  }
+  h1 {
+    text-align: center;
+  }
+  form {
+    max-width: 600px;
+    margin: 0 auto 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px #ccc;
+  }
+  form > * {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  input[type=text], select, textarea {
+    padding: 8px;
+    font-size: 1rem;
+  }
+  button {
+    cursor: pointer;
+    padding: 10px;
+    background: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+  }
+  button:hover {
+    background: #1c5980;
+  }
+  #filePreview {
+    font-style: italic;
+    color: #555;
+  }
+  #searchBar, #filterCategory {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 8px;
+    font-size: 1rem;
+    display: block;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  #appuntiList {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  .appunto {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  .appunto h3 {
+    margin: 0 0 5px;
+  }
+  .category-label {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+  }
+  .matematica { background: #27ae60; }
+  .italiano { background: #e67e22; }
+  .scienze { background: #2980b9; }
+  .storia { background: #8e44ad; }
+  .appunto-actions {
+    margin-top: 10px;
+  }
+  .appunto-actions button,
+  .appunto-actions a {
+    margin-right: 8px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+  }
+  .like-btn {
+    background: #3498db;
+  }
+  .delete-btn {
+    background: #e74c3c;
+  }
+  .download-link {
+    background: #2ecc71;
+  }
+  .comments-section {
+    margin-top: 12px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+  }
+  .comment {
+    background: #f0f0f0;
+    margin-bottom: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+  .comment-form {
+    display: flex;
+    margin-top: 6px;
+  }
+  .comment-form input[type=text] {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.9rem;
+    border-radius: 6px 0 0 6px;
+    border: 1px solid #ccc;
+    border-right: none;
+  }
+  .comment-form button {
+    border-radius: 0 6px 6px 0;
+    background: #27ae60;
+  }
+</style>
+</head>
+<body>
+    <header>
+    <div class="navbar">
+      <div class="logo">StudentHub</div>
+      <nav>
+        <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="calendario.html">Calendario</a></li>
+        <li><a href="metodi.html">Metodi di Studio</a></li>
+        <li><a href="obiettivi.html">Obiettivi e Progressi</a></li>
+        <li><a href="appunti.html">Appunti</a></li>
+        <li> <a href="benessere.html">Benessere mentale</a> </li>
+      </ul>
+      </nav>
+    </div>
+  </header>
+
+<h1>Appunti - StudentHub</h1>
+
+<form id="uploadForm">
+  <input type="text" id="title" placeholder="Titolo appunto *" required />
+  <textarea id="description" placeholder="Descrizione (opzionale)"></textarea>
+  <select id="category" required>
+    <option value="" disabled selected>Seleziona materia *</option>
+    <option value="matematica">Matematica</option>
+    <option value="italiano">Italiano</option>
+    <option value="scienze">Scienze</option>
+    <option value="storia">Storia</option>
+  </select>
+  <input type="file" id="file" accept=".pdf,.doc,.docx" required />
+  <div id="filePreview"></div>
+  <button type="submit">Carica appunto</button>
+</form>
+
+<input type="text" id="searchBar" placeholder="Cerca appunti..." />
+<select id="filterCategory">
+  <option value="tutte" selected>Tutte le materie</option>
+  <option value="matematica">Matematica</option>
+  <option value="italiano">Italiano</option>
+  <option value="scienze">Scienze</option>
+  <option value="storia">Storia</option>
+</select>
+
+<div id="appuntiList"></div>
+
+<script>
+  const uploadForm = document.getElementById('uploadForm');
+  const titleInput = document.getElementById('title');
+  const descriptionInput = document.getElementById('description');
+  const categoryInput = document.getElementById('category');
+  const fileInput = document.getElementById('file');
+  const filePreview = document.getElementById('filePreview');
+
+  const searchBar = document.getElementById('searchBar');
+  const filterCategory = document.getElementById('filterCategory');
+  const appuntiList = document.getElementById('appuntiList');
+
+  // Carica appunti dal localStorage
+  function loadAppunti() {
+    let appunti = localStorage.getItem('appunti');
+    if (!appunti) return [];
+    try {
+      return JSON.parse(appunti);
+    } catch {
+      return [];
+    }
+  }
+
+  // Salva appunti su localStorage
+  function saveAppunti(appunti) {
+    localStorage.setItem('appunti', JSON.stringify(appunti));
+  }
+
+  // Mostra anteprima nome file
+  fileInput.addEventListener('change', () => {
+    if(fileInput.files.length > 0) {
+      filePreview.textContent = `File selezionato: ${fileInput.files[0].name}`;
+    } else {
+      filePreview.textContent = '';
+    }
+  });
+
+  // Funzione per pulire input testo (basic escape)
+  function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, (m) => ({
+      '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+    })[m]);
+  }
+
+  // Ricarica lista appunti in pagina, con filtri e ricerca
+  function refreshAppuntiList() {
+    const appunti = loadAppunti();
+    const filter = filterCategory.value;
+    const search = searchBar.value.toLowerCase();
+
+    appuntiList.innerHTML = '';
+
+    const filtered = appunti.filter(a => {
+      let matchCat = filter === 'tutte' || a.category === filter;
+      let matchSearch = a.title.toLowerCase().includes(search) || a.description.toLowerCase().includes(search);
+      return matchCat && matchSearch;
+    });
+
+    if(filtered.length === 0) {
+      appuntiList.innerHTML = '<p>Nessun appunto trovato.</p>';
+      return;
+    }
+
+    filtered.forEach((a, i) => {
+      const div = document.createElement('div');
+      div.className = 'appunto';
+
+      div.innerHTML = `
+        <h3>${escapeHTML(a.title)}</h3>
+        <div><span class="category-label ${a.category}">${escapeHTML(a.category)}</span></div>
+        <p>${escapeHTML(a.description)}</p>
+        <p><em>File: ${escapeHTML(a.fileName)}</em></p>
+        <div class="appunto-actions">
+          <a class="download-link" href="${a.fileData}" download="${a.fileName}">Scarica</a>
+          <button class="like-btn">❤️ <span>${a.likes || 0}</span></button>
+          <button class="delete-btn">Elimina</button>
+        </div>
+        <div class="comments-section">
+          <strong>Commenti (${(a.comments && a.comments.length) || 0}):</strong>
+          <div class="comments-list">
+            ${(a.comments || []).map(c => `<div class="comment">${escapeHTML(c)}</div>`).join('')}
+          </div>
+          <form class="comment-form">
+            <input type="text" placeholder="Scrivi un commento..." required />
+            <button type="submit">Invia</button>
+          </form>
+        </div>
+      `;
+
+      // Eventi bottoni dentro div appena creato
+
+      // Elimina
+      div.querySelector('.delete-btn').addEventListener('click', () => {
+        if(confirm(`Eliminare l'appunto "${a.title}"?`)) {
+          let appuntiCorrenti = loadAppunti();
+          appuntiCorrenti.splice(appunti.indexOf(a), 1);
+          saveAppunti(appuntiCorrenti);
+          refreshAppuntiList();
+        }
+      });
+
+      // Like
+      div.querySelector('.like-btn').addEventListener('click', () => {
+        let appuntiCorrenti = loadAppunti();
+        let idx = appuntiCorrenti.findIndex(app => app.title === a.title && app.fileName === a.fileName);
+        if(idx > -1) {
+          appuntiCorrenti[idx].likes = (appuntiCorrenti[idx].likes || 0) + 1;
+          saveAppunti(appuntiCorrenti);
+          refreshAppuntiList();
+        }
+      });
+
+      // Commenti
+      const commentForm = div.querySelector('.comment-form');
+      commentForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const input = commentForm.querySelector('input');
+        const val = input.value.trim();
+        if(!val) return;
+        let appuntiCorrenti = loadAppunti();
+        let idx = appuntiCorrenti.findIndex(app => app.title === a.title && app.fileName === a.fileName);
+        if(idx > -1) {
+          if(!appuntiCorrenti[idx].comments) appuntiCorrenti[idx].comments = [];
+          appuntiCorrenti[idx].comments.push(val);
+          saveAppunti(appuntiCorrenti);
+          refreshAppuntiList();
+        }
+      });
+
+      appuntiList.appendChild(div);
+    });
+  }
+
+  // Submit form caricamento appunti
+  uploadForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    if(!titleInput.value.trim()) {
+      alert('Titolo obbligatorio');
+      return;
+    }
+    if(!categoryInput.value) {
+      alert('Seleziona una materia');
+      return;
+    }
+    if(!fileInput.files.length) {
+      alert('Seleziona un file');
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      const appunti = loadAppunti();
+
+      appunti.push({
+        title: titleInput.value.trim(),
+        description: descriptionInput.value.trim(),
+        category: categoryInput.value,
+        fileName: file.name,
+        fileData: e.target.result,
+        likes: 0,
+        comments: []
+      });
+
+      saveAppunti(appunti);
+      uploadForm.reset();
+      filePreview.textContent = '';
+      refreshAppuntiList();
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  // Filtri e ricerca
+  searchBar.addEventListener('input', refreshAppuntiList);
+  filterCategory.addEventListener('change', refreshAppuntiList);
+
+  // Caricamento iniziale
+  document.addEventListener('DOMContentLoaded', refreshAppuntiList);
+</script>
+
+</body>
+</html>
